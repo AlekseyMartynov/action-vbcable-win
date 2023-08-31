@@ -15,7 +15,10 @@ runs:
 
   - shell: powershell
     run: |
-      certutil -addstore TrustedPublisher VBCABLE.cer
-      Expand-Archive .\VBCABLE_Driver_Pack43.zip
+      certutil -addstore TrustedPublisher "${{ github.action_path }}\VBCABLE.cer"
+
+      $UnzipDir = "${{ github.action_path }}\VBCABLE_Temp"
+      Expand-Archive "${{ github.action_path }}\VBCABLE_Driver_Pack43.zip" -DestinationPath $UnzipDir
+
       $DevConDir = "${env:ProgramFiles(x86)}\Windows Kits\10\tools\*\x64" | Resolve-Path
-      . $DevConDir\devcon install VBCABLE_Driver_Pack43\vbMmeCable64_win7.inf VBAudioVACWDM
+      . $DevConDir\devcon install "$UnzipDir\vbMmeCable64_win7.inf" VBAudioVACWDM
