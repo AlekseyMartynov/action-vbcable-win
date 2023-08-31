@@ -16,3 +16,11 @@ jobs:
     - run: choco install fmedia
 
     - run: fmedia --list-dev
+
+    - run: |
+        Start-Job -ScriptBlock { fmedia --repeat-all test.mp3 }
+        fmedia --record --until=00:05 -o test-record.wav
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: test-record.wav
