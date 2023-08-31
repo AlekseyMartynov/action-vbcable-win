@@ -10,6 +10,11 @@ runs:
 
   - shell: powershell
     run: |
+      New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy\"
+      New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" -Name "LetAppsAccessMicrophone" -Value "0x00000001" -PropertyType "dword"
+
+  - shell: powershell
+    run: |
       certutil -addstore TrustedPublisher VBCABLE.cer
       Expand-Archive .\VBCABLE_Driver_Pack43.zip
       $DevConDir = "${env:ProgramFiles(x86)}\Windows Kits\10\tools\*\x64" | Resolve-Path
