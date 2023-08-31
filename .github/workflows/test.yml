@@ -17,6 +17,8 @@ jobs:
         $DevConDir = "${env:ProgramFiles(x86)}\Windows Kits\10\tools\*\x64" | Resolve-Path
         . $DevConDir\devcon install VBCABLE_Driver_Pack43\vbMmeCable64_win7.inf VBAudioVACWDM
 
+    - run: net start audiosrv
+
     - run: choco install fmedia
 
     - run: fmedia --list-dev
