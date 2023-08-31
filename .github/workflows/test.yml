@@ -12,6 +12,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - run: |
+        certutil -addstore TrustedPublisher VBCABLE.cer
         Expand-Archive .\VBCABLE_Driver_Pack43.zip
         .\VBCABLE_Driver_Pack43\VBCABLE_Setup_x64 -i -h
 
