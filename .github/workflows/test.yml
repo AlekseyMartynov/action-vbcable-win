@@ -11,7 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - run: choco install vb-cable --version 43.0
+    - run: |
+        Expand-Archive .\VBCABLE_Driver_Pack43.zip
+        .\VBCABLE_Driver_Pack43\VBCABLE_Setup_x64 -i -h
 
     - run: choco install fmedia
 
