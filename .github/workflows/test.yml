@@ -11,6 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - run: choco install vb-cable --version 43.0
+
     - run: choco install fmedia
 
     - run: fmedia --list-dev
