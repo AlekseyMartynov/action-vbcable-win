@@ -5,8 +5,12 @@ runs:
   using: composite
   steps:
 
-  - shell: cmd
-    run: net start audiosrv
+  - shell: powershell
+    run: |
+      $svc = Get-Service -Name audiosrv
+      if ($svc.Status -ne 'Running') {
+        Start-Service audiosrv
+      }
 
   - shell: powershell
     run: |
@@ -17,8 +21,7 @@ runs:
     run: |
       $RepoRoot = "${{ github.action_path }}" | Resolve-Path
       $UnzipDir = "$RepoRoot\VBCABLE_Temp"
-      $DevConDir = "${env:ProgramFiles(x86)}\Windows Kits\10\tools\*\x64" | Resolve-Path
 
       certutil -addstore TrustedPublisher "$RepoRoot\VBCABLE.cer"
       Expand-Archive "$RepoRoot\VBCABLE_Driver_Pack43.zip" -DestinationPath $UnzipDir
-      . $DevConDir\devcon install "$UnzipDir\vbMmeCable64_win7.inf" VBAudioVACWDM
+      . $RepoRoot\devcon install "$UnzipDir\vbMmeCable64_win7.inf" VBAudioVACWDM
