@@ -13,13 +13,13 @@ jobs:
 
     - uses: ./
 
-    - run: choco install fmedia
+    - run: choco install phiola.portable
 
-    - run: fmedia --list-dev
+    - run: phiola device list
 
     - run: |
-        Start-Job -ScriptBlock { fmedia --repeat-all test.mp3 }
-        fmedia --record --until=00:05 -o test-record.wav
+        Start-Job -ScriptBlock { phiola play -repeat test.mp3 }
+        phiola record -until 5 -o test-record.wav
 
     - uses: actions/upload-artifact@v7
       with:
