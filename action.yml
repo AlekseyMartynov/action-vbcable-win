@@ -22,6 +22,6 @@ runs:
       $RepoRoot = "${{ github.action_path }}" | Resolve-Path
       $UnzipDir = "$RepoRoot\VBCABLE_Temp"
 
-      certutil -addstore TrustedPublisher "$RepoRoot\VBCABLE.cer"
+      certutil -f -addstore TrustedPublisher "$RepoRoot\VBCABLE.cer"
       Expand-Archive "$RepoRoot\VBCABLE_Driver_Pack45.zip" -DestinationPath $UnzipDir
-      . $RepoRoot\devcon install "$UnzipDir\vbMmeCable64_win10.inf" VBAudioVACWDM
+      . $RepoRoot\devcon-$env:PROCESSOR_ARCHITECTURE install "$UnzipDir\vbMmeCable64_win10.inf" VBAudioVACWDM
